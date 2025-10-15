@@ -26,6 +26,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
+  Column,
 } from '@tanstack/react-table'
 import {
   ArrowUpDown,
@@ -491,7 +492,7 @@ export function DataTableColumnHeader({
   title,
   className,
 }: {
-  column: any
+  column: Column<any, unknown>
   title: string
   className?: string
 }) {

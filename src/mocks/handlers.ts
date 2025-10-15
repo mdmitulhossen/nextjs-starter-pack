@@ -15,8 +15,8 @@ const API_URL = process.env['NEXT_PUBLIC_API_URL'] || 'http://localhost:3000/api
 const NETWORK_DELAY = 300
 
 // In-memory storage (resets on reload)
-let users = [...mockUsers, ...generateMockUsers(20)]
-let products = [...mockProducts, ...generateMockProducts(20)]
+const users = [...mockUsers, ...generateMockUsers(20)]
+const products = [...mockProducts, ...generateMockProducts(20)]
 
 /**
  * ===========================================

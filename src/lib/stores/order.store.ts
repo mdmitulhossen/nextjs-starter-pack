@@ -58,7 +58,7 @@ export const useOrderStore = create<OrderStoreState>()(
           set((state) => {
             const index = state.orders.findIndex((item) => item.id === id)
             if (index !== -1) {
-              state.orders[index] = { ...state.orders[index], ...updates }
+              state.orders[index] = { ...state.orders[index], ...updates } as Order
             }
           }),
 
