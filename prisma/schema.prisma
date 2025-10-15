@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// 🚀 Prisma Configuration
+// Supports both PostgreSQL and MongoDB
+// Switch between databases by changing DATABASE_URL in .env
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 🎯 Database Configuration
+// For PostgreSQL (Recommended for production):
+//   DATABASE_URL="postgresql://user:password@localhost:5432/mydb?schema=public"
+//
+// For MongoDB:
+//   DATABASE_URL="mongodb+srv://user:password@cluster.mongodb.net/mydb?retryWrites=true&w=majority"
+//
+// For MySQL:
+//   DATABASE_URL="mysql://user:password@localhost:3306/mydb"
+//
+// For SQLite (Development only):
+//   DATABASE_URL="file:./dev.db"
+
+datasource db {
+  provider = "postgresql" // Change to "mongodb", "mysql", or "sqlite" as needed
+  url      = env("DATABASE_URL")
+}
+
+// ====================================
+// 📊 EXAMPLE MODELS (PostgreSQL/MySQL)
+// ====================================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  image     String?
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  orders    Order[]
+  posts     Post[]
+
+  @@map("users")
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  orderNo   String   @unique
+  status    String   @default("pending")
+  total     Float
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     OrderItem[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  published Boolean  @default(false)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([authorId])
+  @@index([published])
+  @@map("posts")
+}
+
+// ====================================
+// 🍃 MONGODB ALTERNATIVE MODELS
+// ====================================
+// Uncomment and use these if using MongoDB
+// Remove above models and switch provider to "mongodb"
+
+// model User {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   email     String   @unique
+//   name      String?
+//   password  String?
+//   image     String?
+//   role      String   @default("user")
+//   orderIds  String[] @db.ObjectId
+//   orders    Order[]  @relation(fields: [orderIds], references: [id])
+//   postIds   String[] @db.ObjectId
+//   posts     Post[]   @relation(fields: [postIds], references: [id])
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   @@map("users")
+// }
+
+// model Order {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   orderNo   String   @unique
+//   status    String   @default("pending")
+//   total     Float
+//   userIds   String[] @db.ObjectId
+//   users     User[]   @relation(fields: [userIds], references: [id])
+//   items     OrderItem[]
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   @@map("orders")
+// }
+
+// model OrderItem {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   orderId   String   @db.ObjectId
+//   productId String
+//   quantity  Int
+//   price     Float
+//   createdAt DateTime @default(now())
+//
+//   @@map("order_items")
+// }
+
+// model Post {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   title     String
+//   slug      String   @unique
+//   content   String
+//   published Boolean  @default(false)
+//   authorIds String[] @db.ObjectId
+//   authors   User[]   @relation(fields: [authorIds], references: [id])
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//
+//   @@map("posts")
+// }
