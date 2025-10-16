@@ -454,14 +454,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 6. **Error Boundaries** - Catch errors gracefully
 7. **Loading Skeletons** - Improve perceived performance
 
-## 🎯 Next Steps
+## 🎯 Next Steps (Optional Backend Integration)
 
-1. Add authentication (NextAuth.js)
-2. Integrate a database (Prisma + PostgreSQL)
-3. Add state management (Zustand/Jotai)
+1. Add authentication with backend (NextAuth.js + your API)
+2. Connect to existing backend API (REST/GraphQL)
+3. Add state management (Zustand/Jotai) - Already included!
 4. Set up testing (Vitest + Testing Library)
 5. Add i18n (next-intl)
 6. Configure CI/CD (GitHub Actions)
+7. Integrate database if needed (Prisma/Drizzle + your preferred DB)
 
 ---
 

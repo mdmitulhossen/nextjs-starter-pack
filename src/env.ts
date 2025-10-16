@@ -6,7 +6,7 @@ export const env = createEnv({
      * Server-side environment variables schema
      */
     server: {
-        DATABASE_URL: z.string().url(),
+        DATABASE_URL: z.string().url().optional(),
         NEXTAUTH_SECRET: z.string().min(1),
         NEXTAUTH_URL: z.string().url().optional(),
 

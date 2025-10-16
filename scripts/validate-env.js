@@ -5,13 +5,6 @@ const path = require('path');
 
 // Required environment variables
 const REQUIRED_VARS = {
-  // Database
-  DATABASE_URL: {
-    description: 'Database connection string',
-    example: 'postgresql://user:password@localhost:5432/mydb',
-    required: true,
-  },
-
   // NextAuth
   NEXTAUTH_URL: {
     description: 'Next.js app URL for authentication',
